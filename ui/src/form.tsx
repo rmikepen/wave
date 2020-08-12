@@ -26,6 +26,7 @@ import { Text, TextL, TextM, TextS, TextXl, TextXs, XText } from './text';
 import { Textbox, XTextbox } from './textbox';
 import { getTheme } from './theme';
 import { Toggle, XToggle } from './toggle';
+import { DataGrid, XDataGrid } from './data_grid';
 import { XToolTip } from './tooltip';
 
 /** Create a component. */
@@ -88,6 +89,8 @@ export interface Component {
   expander?: Expander
   /** Frame */
   frame?: Frame
+  /** Data Grid. */
+  data_grid?: DataGrid
 }
 
 /** Create a form. */
@@ -142,6 +145,7 @@ const
     if (m.button) return <XToolTip content={m.button.tooltip} showIcon={false} expand={false}><XStandAloneButton model={m.button} /></XToolTip>
     if (m.expander) return <XExpander model={m.expander} />
     if (m.frame) return <XFrame model={m.frame} />
+    if (m.data_grid) return <XDataGrid model={m.data_grid} />
     return <Fluent.MessageBar messageBarType={Fluent.MessageBarType.severeWarning}>This component could not be rendered.</Fluent.MessageBar>
   },
   View = bond(({ state, changed }: Card<State>) => {

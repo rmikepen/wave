@@ -1088,6 +1088,69 @@ def frame(
     ))
 
 
+def data_grid_row(
+        name: str,
+        cells: List[str],
+) -> DataGridRow:
+    """Create a data grid row.
+
+    Args:
+        name: An identifying name for this row.
+        cells: The cells in this row (displayed left to right).
+    Returns:
+        A `h2o_q.types.DataGridRow` instance.
+    """
+    return DataGridRow(
+        name,
+        cells,
+    )
+
+
+def data_grid_col(
+        name: str,
+        label: str,
+        sortable: Optional[bool] = None,
+) -> DataGridCol:
+    """Create a data grid column.
+
+    Args:
+        name: DataGrid data property name to display.
+        label: DataGrid column label.
+        sortable: Controls whether DataGrid column should be sortable or not.
+    Returns:
+        A `h2o_q.types.DataGridCol` instance.
+    """
+    return DataGridCol(
+        name,
+        label,
+        sortable,
+    )
+
+
+def data_grid(
+        name: str,
+        rows: List[DataGridRow],
+        cols: List[DataGridCol],
+) -> Component:
+    """Create an interactive data grid.
+
+    This component is meant to display large data.
+    Basic features: filtering, sorting, pagination.
+
+    Args:
+        name: An identifying name for this component.
+        rows: The rows in this table.
+        cols: The columns in this table.
+    Returns:
+        A `h2o_q.types.DataGrid` instance.
+    """
+    return Component(data_grid=DataGrid(
+        name,
+        rows,
+        cols,
+    ))
+
+
 def component(
         text: Optional[Text] = None,
         text_xl: Optional[TextXl] = None,
@@ -1118,6 +1181,7 @@ def component(
         tabs: Optional[Tabs] = None,
         expander: Optional[Expander] = None,
         frame: Optional[Frame] = None,
+        data_grid: Optional[DataGrid] = None,
 ) -> Component:
     """Create a component.
 
@@ -1151,6 +1215,7 @@ def component(
         tabs: Tabs.
         expander: Expander.
         frame: Frame
+        data_grid: Data Grid.
     Returns:
         A `h2o_q.types.Component` instance.
     """
@@ -1184,6 +1249,7 @@ def component(
         tabs,
         expander,
         frame,
+        data_grid,
     )
 
 
