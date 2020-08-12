@@ -1088,6 +1088,45 @@ def frame(
     ))
 
 
+def data_grid_col(
+        title: str,
+) -> DataGridCol:
+    """Create a data grid column.
+
+    Args:
+        title: DataGrid column title.
+    Returns:
+        A `h2o_q.types.DataGridCol` instance.
+    """
+    return DataGridCol(
+        title,
+    )
+
+
+def data_grid(
+        name: str,
+        rows: List[str],
+        cols: List[DataGridCol],
+) -> Component:
+    """Create an interactive data grid.
+
+    This component is meant to display large data.
+    Basic features: filtering, sorting, pagination.
+
+    Args:
+        name: An identifying name for this component.
+        rows: The rows in this table.
+        cols: The columns in this table.
+    Returns:
+        A `h2o_q.types.DataGrid` instance.
+    """
+    return Component(data_grid=DataGrid(
+        name,
+        rows,
+        cols,
+    ))
+
+
 def component(
         text: Optional[Text] = None,
         text_xl: Optional[TextXl] = None,
@@ -1118,6 +1157,7 @@ def component(
         tabs: Optional[Tabs] = None,
         expander: Optional[Expander] = None,
         frame: Optional[Frame] = None,
+        data_grid: Optional[DataGrid] = None,
 ) -> Component:
     """Create a component.
 
@@ -1151,6 +1191,7 @@ def component(
         tabs: Tabs.
         expander: Expander.
         frame: Frame
+        data_grid: Data grid.
     Returns:
         A `h2o_q.types.Component` instance.
     """
@@ -1184,6 +1225,7 @@ def component(
         tabs,
         expander,
         frame,
+        data_grid,
     )
 
 

@@ -2188,6 +2188,91 @@ class Frame:
         )
 
 
+class DataGridCol:
+    """Create a data grid column.
+    """
+    def __init__(
+            self,
+            title: str,
+    ):
+        self.title = title
+        """DataGrid column title."""
+
+    def dump(self) -> Dict:
+        """Returns the contents of this object as a dict."""
+        if self.title is None:
+            raise ValueError('DataGridCol.title is required.')
+        return _dump(
+            title=self.title,
+        )
+
+    @staticmethod
+    def load(__d: Dict) -> 'DataGridCol':
+        """Creates an instance of this class using the contents of a dict."""
+        __d_title: Any = __d.get('title')
+        if __d_title is None:
+            raise ValueError('DataGridCol.title is required.')
+        title: str = __d_title
+        return DataGridCol(
+            title,
+        )
+
+
+class DataGrid:
+    """Create an interactive data grid.
+
+    This component is meant to display large data.
+    Basic features: filtering, sorting, pagination.
+    """
+    def __init__(
+            self,
+            name: str,
+            rows: List[str],
+            cols: List[DataGridCol],
+    ):
+        self.name = name
+        """An identifying name for this component."""
+        self.rows = rows
+        """The rows in this table."""
+        self.cols = cols
+        """The columns in this table."""
+
+    def dump(self) -> Dict:
+        """Returns the contents of this object as a dict."""
+        if self.name is None:
+            raise ValueError('DataGrid.name is required.')
+        if self.rows is None:
+            raise ValueError('DataGrid.rows is required.')
+        if self.cols is None:
+            raise ValueError('DataGrid.cols is required.')
+        return _dump(
+            name=self.name,
+            rows=self.rows,
+            cols=[__e.dump() for __e in self.cols],
+        )
+
+    @staticmethod
+    def load(__d: Dict) -> 'DataGrid':
+        """Creates an instance of this class using the contents of a dict."""
+        __d_name: Any = __d.get('name')
+        if __d_name is None:
+            raise ValueError('DataGrid.name is required.')
+        __d_rows: Any = __d.get('rows')
+        if __d_rows is None:
+            raise ValueError('DataGrid.rows is required.')
+        __d_cols: Any = __d.get('cols')
+        if __d_cols is None:
+            raise ValueError('DataGrid.cols is required.')
+        name: str = __d_name
+        rows: List[str] = __d_rows
+        cols: List[DataGridCol] = [DataGridCol.load(__e) for __e in __d_cols]
+        return DataGrid(
+            name,
+            rows,
+            cols,
+        )
+
+
 class Component:
     """Create a component.
     """
@@ -2222,6 +2307,7 @@ class Component:
             tabs: Optional[Tabs] = None,
             expander: Optional[Expander] = None,
             frame: Optional[Frame] = None,
+            data_grid: Optional[DataGrid] = None,
     ):
         self.text = text
         """Text block."""
@@ -2281,6 +2367,8 @@ class Component:
         """Expander."""
         self.frame = frame
         """Frame"""
+        self.data_grid = data_grid
+        """Data grid."""
 
     def dump(self) -> Dict:
         """Returns the contents of this object as a dict."""
@@ -2314,6 +2402,7 @@ class Component:
             tabs=None if self.tabs is None else self.tabs.dump(),
             expander=None if self.expander is None else self.expander.dump(),
             frame=None if self.frame is None else self.frame.dump(),
+            data_grid=None if self.data_grid is None else self.data_grid.dump(),
         )
 
     @staticmethod
@@ -2348,6 +2437,7 @@ class Component:
         __d_tabs: Any = __d.get('tabs')
         __d_expander: Any = __d.get('expander')
         __d_frame: Any = __d.get('frame')
+        __d_data_grid: Any = __d.get('data_grid')
         text: Optional[Text] = None if __d_text is None else Text.load(__d_text)
         text_xl: Optional[TextXl] = None if __d_text_xl is None else TextXl.load(__d_text_xl)
         text_l: Optional[TextL] = None if __d_text_l is None else TextL.load(__d_text_l)
@@ -2377,6 +2467,7 @@ class Component:
         tabs: Optional[Tabs] = None if __d_tabs is None else Tabs.load(__d_tabs)
         expander: Optional[Expander] = None if __d_expander is None else Expander.load(__d_expander)
         frame: Optional[Frame] = None if __d_frame is None else Frame.load(__d_frame)
+        data_grid: Optional[DataGrid] = None if __d_data_grid is None else DataGrid.load(__d_data_grid)
         return Component(
             text,
             text_xl,
@@ -2407,6 +2498,7 @@ class Component:
             tabs,
             expander,
             frame,
+            data_grid,
         )
 
 
