@@ -2,6 +2,8 @@ import * as Fluent from '@fluentui/react'
 import React from 'react'
 import { S, B } from './qd'
 import { displayMixin } from './theme'
+import { Markdown } from './markdown'
+import { stylesheet } from 'typestyle'
 
 /**
  * Create a message bar.
@@ -22,6 +24,14 @@ export interface MessageBar {
 }
 
 const
+  css = stylesheet({
+    messageBar: {
+      $nest: {
+        '.wave-markdown > *:first-child': { marginTop: 0 },
+        '.wave-markdown > *:only-child': { marginBottom: 0 },
+      }
+    }
+  }),
   toMessageBarType = (t?: S): Fluent.MessageBarType => {
     switch (t) {
       case 'error': return Fluent.MessageBarType.error
@@ -40,7 +50,11 @@ export const
         <Fluent.MessageBar
           data-test={m.name}
           style={displayMixin(m.visible)}
-          messageBarType={toMessageBarType(m.type)} >{m.text}</Fluent.MessageBar>
+          messageBarType={toMessageBarType(m.type)}
+          className={css.messageBar}
+        >
+          <Markdown source={m.text} />
+        </Fluent.MessageBar>
       )
       : <div />
   )
