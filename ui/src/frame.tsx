@@ -15,8 +15,8 @@
 import React from 'react'
 import { stylesheet } from 'typestyle'
 import { cards, grid } from './layout'
-import { bond, Card, S, xid, B } from './qd'
-import { getTheme, displayMixin } from './theme'
+import { bond, Card, S, xid } from './qd'
+import { getTheme } from './theme'
 
 const
   theme = getTheme(),
@@ -49,8 +49,6 @@ export interface Frame {
   height?: S
   /** An identifying name for this component. */
   name?: S
-  /** True if the component should be visible. Defaults to true. */
-  visible?: B
 }
 
 /**
@@ -76,8 +74,8 @@ const
   )
 
 // HACK: Applying width/height styles directly on iframe don't work in Chrome/FF; so wrap in div instead.
-export const XFrame = ({ model: { name, path, content, width = '100%', height = '150px', visible } }: { model: Frame }) => (
-  <div data-test={name} style={{ width, height, ...displayMixin(visible) }}>
+export const XFrame = ({ model: { name, path, content, width = '100%', height = '150px' } }: { model: Frame }) => (
+  <div data-test={name} style={{ width, height }}>
     <InlineFrame path={path} content={content} />
   </div>
 )

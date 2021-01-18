@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import { Chart, registerInteraction } from '@antv/g2'
-import { AdjustOption, AnnotationPosition, ArcOption, CoordinateActions, CoordinateOption, DataMarkerOption, DataRegionOption, GeometryOption, LineOption, RegionOption, ScaleOption, TextOption, ChartCfg, AxisOption } from '@antv/g2/lib/interface'
+import { AdjustOption, AnnotationPosition, ArcOption, AxisOption, ChartCfg, CoordinateActions, CoordinateOption, DataMarkerOption, DataRegionOption, GeometryOption, LineOption, RegionOption, ScaleOption, TextOption } from '@antv/g2/lib/interface'
 import React from 'react'
 import { stylesheet } from 'typestyle'
 import { Fmt, parseFormat } from './intl'
 import { cards, grid } from './layout'
 import { B, bond, Card, Dict, F, parseI, parseU, qd, Rec, S, unpack, V } from './qd'
-import { getTheme, displayMixin } from './theme'
+import { getTheme } from './theme'
 
 const
   theme = getTheme(),
@@ -758,8 +758,6 @@ export interface Visualization {
   height?: S
   /** An identifying name for this component. */
   name?: S
-  /** True if the component should be visible. Defaults to true. */
-  visible?: B
   /** The events to capture on this visualization. */
   events?: S[]
 }
@@ -819,11 +817,11 @@ export const
       },
       render = () => {
         const
-          { width = 'auto', height = 'auto', visible, name } = model,
+          { width = 'auto', height = 'auto', name } = model,
           style: React.CSSProperties = (width === 'auto' && height === 'auto')
             ? { flexGrow: 1 }
             : { width, height }
-        return <div data-test={name} style={{ ...style, ...displayMixin(visible) }} ref={container} />
+        return <div data-test={name} style={style} ref={container} />
       }
     return { init, update, render }
   })

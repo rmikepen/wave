@@ -15,8 +15,7 @@
 import * as Fluent from '@fluentui/react'
 import React from 'react'
 import { stylesheet } from 'typestyle'
-import { bond, S, qd, B } from './qd'
-import { displayMixin } from './theme'
+import { B, bond, qd, S } from './qd'
 
 /**
  * Create a tab.
@@ -40,8 +39,6 @@ export interface Tabs {
   value?: S
   /** The tabs in this tab bar. */
   items?: Tab[]
-  /** True if the component should be visible. Defaults to true. */
-  visible?: B
   /** True if tabs should be rendered as links instead of buttons. */
   link?: B
 }
@@ -88,7 +85,6 @@ export const
           <div className={css.pivot}>
             <Fluent.Pivot
               data-test={m.name}
-              style={displayMixin(m.visible)}
               selectedKey={m.value ?? null}
               linkFormat={m.link ? Fluent.PivotLinkFormat.links : Fluent.PivotLinkFormat.tabs}
               onLinkClick={onLinkClick}>{tabs}</Fluent.Pivot>

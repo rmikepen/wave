@@ -831,6 +831,21 @@ const
       }
     }
 
+    // Add common props.
+    for (const type of types) {
+      // Each form component should have a "visible" prop.
+      if (type.oneOf?.type.file === 'form') {
+        type.members.push({
+          t: MemberT.Singular,
+          name: 'visible',
+          typeName: 'B',
+          isOptional: true,
+          comments: ['True if the component should be visible. Defaults to true.'],
+          isPacked: false
+        })
+      }
+    }
+
     return { types, lookup }
   },
   measureStats = (protocol: Protocol) => {
